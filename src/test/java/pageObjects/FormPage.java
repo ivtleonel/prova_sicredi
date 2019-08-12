@@ -7,16 +7,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import core.PageBase;
 
-
-public class FormPage extends PageBase{
-	
-	
-	public FormPage() {
-		
+public class FormPage {
+	public WebDriverWait wait;
+	private WebDriver driver;
+	public FormPage(WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+		wait = new WebDriverWait(driver, 10);	
 	}
 
 	@FindBy(how = How.ID, using = "field-customerName") 
@@ -159,8 +161,6 @@ public class FormPage extends PageBase{
 		 }
 		   	 
 		 WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(className)));
-		 System.out.print(element.getText());
-		 System.out.print(message);
 		 return element.getText().equals(message); 
 	 }
 }

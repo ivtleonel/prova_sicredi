@@ -2,18 +2,22 @@ package pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import core.PageBase;
+public class HomePage{
+	public WebDriverWait wait;
+	private WebDriver driver;
 
-public class HomePage extends PageBase{
-	
-
-	public HomePage() {
-				
+	public HomePage(WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+		wait = new WebDriverWait(driver, 10);			
 	}
 
 	@FindBy(how = How.ID, using = "switch-version-select") 
@@ -71,8 +75,14 @@ public class HomePage extends PageBase{
 		searchField.sendKeys(search);
 		searchField.sendKeys(Keys.ENTER);
 		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".loading-opacity")));
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".loading-opacity")));
+		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
 	
